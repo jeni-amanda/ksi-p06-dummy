@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>T5 Dokumen - Aman</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 36px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+    }
+
+    select, input, button {
+      padding: 12px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    button {
+      background: #222;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #444;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #eee;
+      min-height: 50px;
+    }
+
+    .denied {
+      color: #b00020;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>T5 — Portal Dokumen (AMAN)</h1>
+
+<div class="card">
+  <p>
+    Demo lokal: akses dokumen diperiksa berdasarkan kepemilikan.
+  </p>
+
+  <label>Sesi aktif:</label><br>
+
+  <select id="currentUserSafe">
+    <option value="andi">andi</option>
+    <option value="bela">bela</option>
+  </select>
+
+  <br><br>
+
+  <label>ID Dokumen:</label><br>
+
+  <input
+    id="documentIdSafe"
+    type="text"
+    value="DOC-101"
+  >
+
+  <br>
+
+  <!-- ID tombol dibuat unik -->
+  <button id="btnOpenSafe">Buka</button>
+
+  <div id="resultSafe">
+    Belum ada dokumen yang dibuka.
+  </div>
+</div>
+
+<script>
+  const documentsSafe = [
+    {
+      id: "DOC-101",
+      owner: "andi",
+      title: "Laporan Keuangan Andi",
+      content: "Dokumen rahasia milik Andi."
+    },
+    {
+      id: "DOC-102",
+      owner: "bela",
+      title: "Data Anggaran Bela",
+      content: "Dokumen rahasia milik Bela."
+    }
+  ];
+
+  const safeUserSelect =
+    document.getElementById("currentUserSafe");
+
+  const safeDocumentInput =
+    document.getElementById("documentIdSafe");
+
+  const safeOpenButton =
+    document.getElementById("btnOpenSafe");
+
+  const safeResultBox =
+    document.getElementById("resultSafe");
+
+  safeOpenButton.addEventListener("click", function () {
+
+    const currentUser = safeUserSelect.value;
+    const requestedId = safeDocumentInput.value.trim();
+
+    const documentData = documentsSafe.find(
+      function(doc) {
+        return doc.id === requestedId;
+      }
+    );
+
+    if (!documentData) {
+      safeResultBox.textContent =
+        "404 — Dokumen tidak ditemukan.";
+      return;
+    }
+
+    /*
+      AMAN:
+      Periksa apakah dokumen memang milik
+      pengguna yang sedang aktif.
+    */
+
+    if (documentData.owner !== currentUser) {
+      safeResultBox.innerHTML =
+        '<p class="denied">' +
+        '403 — Akses ditolak: objek bukan milik sesi aktif.' +
+        '</p>';
+
+      return;
+    }
+
+    safeResultBox.innerHTML =
+      "<h3>" + documentData.title + "</h3>" +
+      "<p>Pemilik: " + documentData.owner + "</p>" +
+      "<p>" + documentData.content + "</p>" +
+      "<p>Diakses oleh: " + currentUser + "</p>";
+  });
+</script>
+
+</body>
+</html>

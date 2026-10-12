@@ -1,0 +1,7 @@
+{
+  "kasus": "24781104-dependency-verifier",
+  "mode": "aman",
+  "timestamp": "2026-10-09T16:00:00Z",
+  "status": "success",
+  "log": "Token verified with signature check"
+}

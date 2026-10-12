@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Otorisasi Objek Privat - Aman</title>
+</head>
+<body>
+    <h2>Akses Dokumen Privat (Aman - Ownership Check)</h2>
+    <p>Logged in as: <b>User A (ID: 1)</b></p>
+    <label>Masukkan ID Dokumen:</label>
+    <input type="text" id="docId" value="102">
+    <button onclick="getDoc()">Buka Dokumen</button>
+
+    <h3>Konten Dokumen:</h3>
+    <div id="content" style="color: red;"></div>
+
+    <script>
+        const currentUser = { id: 1, name: "User A" };
+        const documents = [
+            { id: 101, ownerId: 1, content: "Dokumen Rahasia Milik User A" },
+            { id: 102, ownerId: 2, content: "Dokumen Rahasia Milik User B" }
+        ];
+
+        function getDoc() {
+            const id = parseInt(document.getElementById("docId").value);
+            const doc = documents.find(d => d.id === id);
+
+            // Aman: Memeriksa apakah ownerId sesuai dengan currentUser.id
+            if (doc) {
+                if (doc.ownerId === currentUser.id) {
+                    document.getElementById("content").style.color = "black";
+                    document.getElementById("content").innerText = doc.content;
+                } else {
+                    document.getElementById("content").style.color = "red";
+                    document.getElementById("content").innerText = "403 Forbidden: Anda tidak berhak mengakses dokumen ini!";
+                }
+            } else {
+                document.getElementById("content").innerText = "Dokumen tidak ditemukan.";
+            }
+        }
+    </script>
+</body>
+</html>

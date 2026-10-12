@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>T4 Kasir - Aman</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:30px auto;padding:0 18px;line-height:1.5;background:#f6f7f9;color:#222}
+.card{background:white;padding:22px;margin:18px 0;border-radius:12px;box-shadow:0 2px 10px #0001}
+input,button,select,textarea{padding:10px;margin:5px 0;border:1px solid #bbb;border-radius:7px}
+button{cursor:pointer;background:#222;color:white}.ok{color:#087a31}.bad{color:#a11}.mono{font-family:monospace;background:#f0f0f0;padding:3px 6px;border-radius:4px}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}pre{white-space:pre-wrap;background:#111;color:#eee;padding:12px;border-radius:8px}
+</style>
+</head>
+<body><h1>T4 — Login Kasir (AMAN)</h1><div class="card"><p>Akun demo: <span class="mono">kasir / Laci#2026</span></p>
+<form id="f"><input id="u" value="kasir"><br><input id="p" type="password"><br><button id="btn">Coba Login</button></form><p id="out"></p><p>Gagal: <b id="count">0</b>/5</p><p id="timer"></p><h3>Log kejadian</h3><pre id="log"></pre></div>
+<script>
+let fails=0,blockedUntil=0; const MAX=5, BLOCK_MS=15000;
+function nowBlocked(){return Date.now()<blockedUntil}
+function addLog(s){log.textContent+=new Date().toLocaleTimeString()+" — "+s+"\n"}
+f.onsubmit=e=>{e.preventDefault();if(nowBlocked()){out.textContent="Akses sementara diblokir.";out.className="bad";return}
+if(u.value==="kasir"&&p.value==="Laci#2026"){fails=0;count.textContent=0;out.textContent="Login berhasil";out.className="ok";addLog("login sukses");return}
+fails++;count.textContent=fails;addLog("login gagal");out.textContent="Password salah";
+if(fails>=MAX){blockedUntil=Date.now()+BLOCK_MS;out.textContent="Ambang tercapai. Blokir 15 detik.";btn.disabled=true;setTimeout(()=>{btn.disabled=false;fails=0;count.textContent=0;addLog("blokir berakhir")},BLOCK_MS)}};
+</script></body></html>

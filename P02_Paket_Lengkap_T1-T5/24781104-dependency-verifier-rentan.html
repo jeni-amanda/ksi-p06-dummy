@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Verifier - Rentan (Lama)</title>
+</head>
+<body>
+    <h2>Verifier Token (Komponen Versi Lama)</h2>
+    <label>Masukkan Token:</label><br>
+    <input type="text" id="tokenInput" size="60" value="eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiYWRtaW4ifQ.">
+    <button onclick="verifyToken()">Verifikasi Token</button>
+
+    <h3>Status Akses:</h3>
+    <div id="result"></div>
+
+    <script>
+        function verifyToken() {
+            const token = document.getElementById("tokenInput").value;
+            const parts = token.split('.');
+
+            // Simulasi komponen lama: Menerima token meskipun algoritma "none" / tanpa signature
+            if (parts.length >= 2) {
+                document.getElementById("result").style.color = "green";
+                document.getElementById("result").innerText = "200 OK: Akses Diterima (Token Unsigned Valid)";
+            } else {
+                document.getElementById("result").style.color = "red";
+                document.getElementById("result").innerText = "401 Unauthorized: Token tidak valid!";
+            }
+        }
+    </script>
+</body>
+</html>

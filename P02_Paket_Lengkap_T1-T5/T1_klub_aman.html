@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>T1 Klub - Aman</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:30px auto;padding:0 18px;line-height:1.5;background:#f6f7f9;color:#222}
+.card{background:white;padding:22px;margin:18px 0;border-radius:12px;box-shadow:0 2px 10px #0001}
+input,button,select,textarea{padding:10px;margin:5px 0;border:1px solid #bbb;border-radius:7px}
+button{cursor:pointer;background:#222;color:white}.ok{color:#087a31}.bad{color:#a11}.mono{font-family:monospace;background:#f0f0f0;padding:3px 6px;border-radius:4px}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}pre{white-space:pre-wrap;background:#111;color:#eee;padding:12px;border-radius:8px}
+</style>
+</head>
+<body><h1>T1 — Pendaftaran Klub (AMAN)</h1>
+<div class="card"><p>Demo lokal: hanya salt, iterasi, dan hash yang disimpan.</p>
+<form id="f"><input id="u" placeholder="Nama pengguna" required><br><input id="p" type="password" placeholder="Sandi" required><br><button>Daftar</button></form>
+<p id="msg"></p></div>
+<div class="card"><h2>Dump data anggota</h2><table><thead><tr><th>User</th><th>Salt</th><th>Iterasi</th><th>Hash</th></tr></thead><tbody id="rows"></tbody></table></div>
+<script>
+const db=[], ITER=1500;
+async function digest(s){const b=new TextEncoder().encode(s);const h=await crypto.subtle.digest("SHA-256",b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("");}
+async function makeHash(password,salt){let v=salt+":"+password;for(let i=0;i<ITER;i++)v=await digest(v+":"+i);return v;}
+f.onsubmit=async e=>{e.preventDefault();const salt=crypto.randomUUID();const hash=await makeHash(p.value,salt);db.push({user:u.value,salt,iterations:ITER,hash});msg.textContent="Akun tersimpan tanpa plaintext password.";f.reset();render();};
+function render(){rows.textContent="";db.forEach(x=>{const tr=document.createElement("tr");[x.user,x.salt,x.iterations,x.hash].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});rows.appendChild(tr)})}
+</script></body></html>

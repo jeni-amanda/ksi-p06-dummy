@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Rekap UKM - Rentan</title>
+</head>
+<body>
+    <h2>Rekap Pendaftaran UKM (Versi Rentan)</h2>
+    <button onclick="rekapData()">Tampilkan Rekap Anggota</button>
+    <div id="result"></div>
+
+    <script>
+        function rekapData() {
+            // Memuat seluruh kolom ke konteks tanpa sanitasi
+            document.getElementById("result").innerText = 
+                "Rekap Anggota: Budi (UKM Musik, WA: 08123456789, Alamat: Jl. Mawar No. 12)";
+        }
+    </script>
+</body>
+</html>

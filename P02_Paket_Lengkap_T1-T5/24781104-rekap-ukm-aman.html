@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Rekap UKM - Aman</title>
+</head>
+<body>
+    <h2>Rekap Pendaftaran UKM (Versi Aman)</h2>
+    <button onclick="rekapData()">Tampilkan Rekap Anggota</button>
+    <div id="result"></div>
+
+    <script>
+        function rekapData() {
+            // Hanya memuat kolom sesuai tujuan dan meredaksi data sensitif
+            document.getElementById("result").innerText = 
+                "Rekap Anggota: Budi (UKM Musik, WA: 0812****789, Alamat: [REDACTED])";
+        }
+    </script>
+</body>
+</html>

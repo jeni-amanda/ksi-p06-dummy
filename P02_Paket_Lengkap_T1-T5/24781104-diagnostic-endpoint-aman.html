@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagnostik - Debug Off (Aman)</title>
+</head>
+<body>
+    <h2>Endpoint Diagnostik (Debug Mode: OFF)</h2>
+    <button onclick="runDiagnostics()">Jalankan Tes Diagnostik Error</button>
+
+    <h3>Hasil Respons Server:</h3>
+    <pre id="output"></pre>
+
+    <script>
+        function runDiagnostics() {
+            // Simulasi response server saat DEBUG = false (Pesan Generik)
+            const safeResponse = {
+                status: "500 Internal Server Error",
+                message: "An error occurred while processing your request. Please contact system administrator."
+            };
+            
+            document.getElementById("output").innerText = JSON.stringify(safeResponse, null, 2);
+        }
+    </script>
+</body>
+</html>
